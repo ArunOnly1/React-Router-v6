@@ -1,26 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import Header from './components/Header/Header'
+import Statistics from './components/Statistics/Statistics'
+import User from './components/User/User'
+import Dashboard from './pages/DashboardPage/Dashboard'
+import Homepage from './pages/Homepage/Homepage'
+import ProductPage from './pages/ProductPage/ProductPage'
 
-function App() {
+const App: React.FC = () => {
+  const isLoggedInUser = true
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Router>
+      {isLoggedInUser && <Header />}
+      <Routes>
+        <Route path='/' element={<Homepage />} />
+        <Route path='/dashboard/*' element={<Dashboard />}>
+          <Route path='user-data' element={<User />} />
+          <Route path='statistics' element={<Statistics />} />
+        </Route>
+        <Route path='/product' element={<ProductPage />} />
+      </Routes>
+    </Router>
+  )
 }
 
-export default App;
+export default App
